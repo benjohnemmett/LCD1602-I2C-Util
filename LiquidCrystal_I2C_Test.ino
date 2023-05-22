@@ -5,6 +5,7 @@
 #define LCD_ADDRESS 0x27
 #define COLUMNS 16
 #define ROWS 2
+#define PIXEL_COLS_PER_CELL 5
 
 LiquidCrystal_I2C lcd(LCD_ADDRESS, COLUMNS, ROWS);
 
@@ -145,7 +146,7 @@ void demoProgressBarClass() {
   lcd.clear();
   lcd.setCursor(4, 0);
   lcd.print("Loading...");
-  for (uint8_t index; index <= bar_sections * 5;index++) {
+  for (uint8_t index = 0; index <= bar_sections * PIXEL_COLS_PER_CELL;index++) {
     bar.SetProgressIndex(index);
     delay(100);
   }
