@@ -22,6 +22,7 @@ void setup()
   demoPrintDirections();
   demoCustomChars();
   demoProgressBarClass();
+  demoCharacterGen();
 }
 
 void loop()
@@ -151,4 +152,39 @@ void demoProgressBarClass() {
     delay(100);
   }
   delay(1000);
+}
+
+void demoCharacterGen() {
+  lcd.clear();
+  lcd.createChar(0, cell_0);
+  lcd.createChar(1, cell_1);
+  lcd.createChar(2, cell_2);
+  lcd.createChar(3, cell_3);
+  lcd.createChar(4, cell_4);
+  lcd.createChar(5, cell_5);
+  lcd.createChar(6, cell_6);
+  lcd.createChar(7, cell_7);
+
+  lcd.home();
+  lcd.print("Custom char");
+  lcd.setCursor(0, 1);
+  lcd.print("from image");
+
+  uint8_t start_col = 12;
+  lcd.setCursor(start_col, 0);
+  lcd.write(0);
+  lcd.setCursor(start_col + 1, 0);
+  lcd.write(1);
+  lcd.setCursor(start_col + 2, 0);
+  lcd.write(2);
+  lcd.setCursor(start_col + 3, 0);
+  lcd.write(3);
+  lcd.setCursor(start_col + 0, 1);
+  lcd.write(4);
+  lcd.setCursor(start_col + 1, 1);
+  lcd.write(5);
+  lcd.setCursor(start_col + 2, 1);
+  lcd.write(6);
+  lcd.setCursor(start_col + 3, 1);
+  lcd.write(7);
 }
