@@ -12,21 +12,15 @@ COLS_PER_CELL = 5
 ROW_SPACE_SIZE = 1
 COL_SPACE_SIZE = 1
 
-def calcTotalImageSize(cell_rows, cell_cols):
+def calcTotalImageSize(char_cell_rows, char_cell_cols):
     """
-    Given the number of cells across (cell_cols) and cells vertically (cell_rows),
+    Given the number of character cells across (cell_cols) and cells vertically (cell_rows),
     calculated the total number of pixels the image will span, including gaps between cells.
     """
-    total_pixel_rows = cell_rows * ROWS_PER_CELL + (cell_rows-1) * ROW_SPACE_SIZE
-    total_pixel_cols = cell_cols * COLS_PER_CELL + (cell_cols-1) * COL_SPACE_SIZE
+    total_pixel_rows = char_cell_rows * ROWS_PER_CELL + (char_cell_rows-1) * ROW_SPACE_SIZE
+    total_pixel_cols = char_cell_cols * COLS_PER_CELL + (char_cell_cols-1) * COL_SPACE_SIZE
 
     return (total_pixel_rows, total_pixel_cols)
-
-
-def calcNumberOfCellsNeeded(image_rows, image_cols):
-    """
-    Given an image size, calculate the number of 
-    """
 
 
 def read_image_as_grayscale(file_name):
@@ -83,12 +77,12 @@ def split_image_into_blocks(binary_image, cell_rows, cell_cols):
 
     return blocks
 
-def generate_code_for_binary_cell_images(binary_image, cell_rows, cell_cols):
+def generate_code_for_binary_cell_images(binary_image, image_name, cell_rows, cell_cols):
     cell_images = split_image_into_blocks(binary_image, cell_rows, cell_cols)
 
     codeString = ""
     for cell_index, cell_image in enumerate(cell_images):
-        codeString += f"uint8_t cell_{cell_index}[8] = {{  \n"
+        codeString += f"uint8_t {image_name}_{cell_index}[8] = {{  \n"
         for cell_row in cell_image:
             row_string = "".join([str(value) for value in cell_row])
             codeString += f"    0b000{row_string},\n"
@@ -122,8 +116,10 @@ def main(args):
         cv2.waitKey(0)
         cv2.destroyAllWindows()
     
-    code_string = generate_code_for_binary_cell_images(binary, args.rows, args.cols)
+    code_string = generate_code_for_binary_cell_images(binary, args.name, args.rows, args.cols)
 
+    print("")
+    print("// Generated with bitmapper.py")
     print(code_string)
 
 if __name__ == "__main__":
@@ -132,6 +128,7 @@ if __name__ == "__main__":
     parser.add_argument("-r", "--rows", help="Number of cell rows to use in the output image.", type=int, default=2, required=False)
     parser.add_argument("-c", "--cols", help="Number of cell columns to use in the output image.", type=int, default=4, required=False)
     parser.add_argument("-d", "--debug", help="Show intermediate images and more logging.", action='store_true')
+    parser.add_argument("-n", "--name", help="The name given to the generated bitmap variables.", type=str, default="custom_char")
     args = parser.parse_args()
     print(args)
 
