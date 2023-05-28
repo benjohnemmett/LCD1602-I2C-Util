@@ -156,14 +156,14 @@ void demoProgressBarClass() {
 
 void demoCharacterGen() {
   lcd.clear();
-  lcd.createChar(0, cell_0);
-  lcd.createChar(1, cell_1);
-  lcd.createChar(2, cell_2);
-  lcd.createChar(3, cell_3);
-  lcd.createChar(4, cell_4);
-  lcd.createChar(5, cell_5);
-  lcd.createChar(6, cell_6);
-  lcd.createChar(7, cell_7);
+  lcd.createChar(0, smile_0);
+  lcd.createChar(1, smile_1);
+  lcd.createChar(2, smile_2);
+  lcd.createChar(3, smile_3);
+  lcd.createChar(4, smile_4);
+  lcd.createChar(5, smile_5);
+  lcd.createChar(6, smile_6);
+  lcd.createChar(7, smile_7);
 
   lcd.home();
   lcd.print("Custom char");
